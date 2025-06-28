@@ -6,24 +6,71 @@ Users can register, log in, deposit/withdraw funds, and make payments using diff
 
 ## 📁 Project Structure
 
-📁 PaymentApp/
-├── 📂 src/
-│   └── 📂 Banking/
-│       ├── 📂 App/                    # Main app logic and CLI
-│       │   └── 📄 PaymentApp.java
-│       ├── 📂 Model/                  # Core models
-│       │   ├── 📄 User.java
-│       │   ├── 📄 Account.java
-│       │   └── 📄 Transaction.java
-│       ├── 📂 Payment/               # Payment interface & implementations
-│       │   ├── 📄 Payment.java
-│       │   ├── 📄 UPI.java
-│       │   └── 📄 CreditCard.java
-│       └── 📂 Services/              # Bank ops & threading
-│           ├── 📄 Bank.java
-│           └── 📄 PaymentThread.java
-├── 📄 .gitignore
-└── 📄 README.md
+![image](https://github.com/user-attachments/assets/1a14caff-3eb2-4e53-90a2-29c5de4edd69)
+
+                        +---------------------+
+                        |     <<interface>>   |
+                        |     Payment         |
+                        +---------------------+
+                        | + pay(amt: double)  |
+                        +---------------------+
+                          ▲           ▲
+                          |           |
+          +----------------+     +-----------------+
+          |   CreditCard    |     |       UPI       |
+          +-----------------+     +-----------------+
+          | + pay(double)   |     | + pay(double)   |
+          +-----------------+     +-----------------+
+
+                    +--------------------+
+                    |      User          |
+                    +--------------------+
+                    | - username: String |
+                    | - password: String |
+                    | - account: Account|
+                    +--------------------+
+
+                    +--------------------------+
+                    |         Account          |
+                    +--------------------------+
+                    | - accountNumber: String  |
+                    | - balance: double        |
+                    | - transactions: List<>   |
+                    +--------------------------+
+                    | + deposit(double)        |
+                    | + withdraw(double)       |
+                    | + addTransaction(tx)     |
+                    +--------------------------+
+
+                    +-------------------------------+
+                    |         Transaction           |
+                    +-------------------------------+
+                    | - amount: double              |
+                    | - type: String (credit/debit) |
+                    | - mode: String (UPI/Card)     |
+                    +-------------------------------+
+
+                    +-----------------------------+
+                    |          Bank               |
+                    +-----------------------------+
+                    | + registerUser()            |
+                    | + loginUser()               |
+                    | + processPayment()          |
+                    +-----------------------------+
+
+                    +-----------------------------+
+                    |      PaymentThread          |
+                    +-----------------------------+
+                    | - method: Payment           |
+                    | - amount: double            |
+                    | + run()                     |
+                    +-----------------------------+
+
+                    +-----------------------------+
+                    |         PaymentApp          |
+                    +-----------------------------+
+                    | + main(String[] args)       |
+                    +-----------------------------+
 
 
 ---
